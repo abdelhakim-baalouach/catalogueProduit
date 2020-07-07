@@ -1,0 +1,196 @@
+<script src="../../../../../RH/ok/gestion-RH/front end/src/app/app-routing.module.ts"></script>
+<app-navbar></app-navbar>
+
+<!-- Modal add-->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form  [formGroup]="addForm" (ngSubmit)="save()">
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="nk-int-st">
+              <label for="name"><h6>Name</h6></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                id="name"
+                placeholder="Name"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="nk-int-st">
+              <label for="price"><h6>Price</h6></label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="price"
+                id="price"
+                value="1.00"
+                min="1"
+                step="0.01"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="nk-int-st">
+              <label for="price"><h6>Quantity</h6></label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="quantity"
+                id="quantity"
+                value="1"
+                min="1"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end-->
+<!-- Modal delete-->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirmation of deletion</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body alert alert-danger">
+        <h6>Please confirm the deletion.</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-danger"  (click)="onDelete()" data-dismiss="modal">delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end-->
+<!-- Modal update-->
+<div class="modal fade" id="update" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Update product</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form  [formGroup]="editForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="nk-int-st">
+              <label for="name"><h6>Name</h6></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="editName"
+                placeholder="Name"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="nk-int-st">
+              <label for="price"><h6>Price</h6></label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="editPrice"
+                min="1"
+                step="0.01"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="nk-int-st">
+              <label for="price"><h6>Quantity</h6></label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="editQuantity"
+                min="1"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="onUpdate()">update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end-->
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Products</h1>
+  <button type="button" class="btn btn-outline-primary"  data-toggle="modal" data-target="#add">Add</button>
+  <button type="button" class="btn btn-outline-info ml-3" (click)="onGetProducts()" >Get Data</button>
+</div>
+<div class="container">
+  <div  class="card-deck col-12">
+    <div  *ngFor="let product of products._embedded.produits" class="col-6">
+      <div class="card mb-4 box-shadow">
+        <div class="card-header text-center">
+          <h2 class="my-0 font-weight-normal">{{product.nameProduct}}</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <h4 class="card-title pricing-card-title">Price :</h4>
+            </div>
+            <div class="col-8">
+              <h3 class="card-title pricing-card-title">{{product.price}} $</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <h4 class="card-title pricing-card-title">Qantity :</h4>
+            </div>
+            <div class="col-8">
+              <h3 class="card-title pricing-card-title">{{ product.quantity }}</h3>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col-6">
+              <button
+                type="button"
+                (click)="update(product)"
+                data-toggle="modal"
+                data-target="#update"
+                class="btn btn-lg btn-block btn-outline-warning">update</button>
+            </div>
+            <div class="col-6">
+              <button
+                type="button"
+                (click)="delete(product)"
+                data-toggle="modal"
+                data-target="#delete"
+                class="btn btn-lg btn-block btn-outline-danger">delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

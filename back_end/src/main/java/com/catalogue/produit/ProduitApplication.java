@@ -41,7 +41,7 @@ public class ProduitApplication implements CommandLineRunner {
 						new Produit(
 								null,
 								Product,
-								10000 + (250000 - 10000) * random.nextDouble(),
+								(double) Math.round(10000 + (250000 - 10000) * random.nextDouble()),
 								random.nextInt(100)))
 		);
 
